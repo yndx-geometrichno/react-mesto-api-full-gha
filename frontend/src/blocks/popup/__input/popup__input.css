@@ -1,0 +1,20 @@
+.popup__input {
+  display: block;
+  width: 100%;
+  line-height: 17px;
+  font-size: 14px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding: 0;
+  padding-bottom: 9px;
+  border-radius: 0;
+}
+
+.popup__input::placeholder {
+  color: var(--lightgray);
+}
+
+.popup__input:focus {
+  outline: none;
+}
+

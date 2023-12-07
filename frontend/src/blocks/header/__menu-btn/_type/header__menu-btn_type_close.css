@@ -1,0 +1,11 @@
+.header__menu-btn_type_close {
+  background-image: url('../../../../images/close-btn.svg');
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-color: var(--transparent);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  object-fit: contain;
+}

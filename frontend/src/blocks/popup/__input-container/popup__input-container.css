@@ -1,0 +1,10 @@
+.popup__input-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 44px;
+  gap: 5px;
+}
+
+.popup__input-container:first-child {
+  padding-bottom: 13px;
+}

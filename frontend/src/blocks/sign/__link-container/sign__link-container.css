@@ -1,0 +1,9 @@
+.sign__link-container {
+  margin: 15px 0 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  line-height: 17px;
+}

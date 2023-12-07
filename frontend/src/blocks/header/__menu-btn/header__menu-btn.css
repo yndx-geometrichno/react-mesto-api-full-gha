@@ -1,0 +1,18 @@
+.header__menu-btn {
+  display: none;
+  cursor: pointer;
+  background-image: url('../../../images/header-open-menu-btn.svg');
+  width: 24px;
+  height: 21px;
+}
+
+.header__menu-btn:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 500px) {
+  .header__menu-btn {
+    margin-right: 30px;
+    display: block;
+  }
+}

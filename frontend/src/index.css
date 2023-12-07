@@ -1,0 +1,80 @@
+@import "./vendor/normalize.css";
+@import "./vendor/fonts.css";
+@import "./vendor/variables.css";
+
+@import "./blocks/header/header.css";
+@import "./blocks/header/_type/header_type_moved.css";
+@import "./blocks/header/__logo/header__logo.css";
+@import "./blocks/header/__user-container/header__user-container.css";
+@import "./blocks/header/__user-container/_type/header__user-container_type_mobile.css";
+@import "./blocks/header/__user-container/_type/header__user-container_type_mobile_active.css";
+@import "./blocks/header/__user-email/header__user-email.css";
+@import "./blocks/header/__button/header__button.css";
+@import "./blocks/header/__button/_type/header__menu_type_slide-menu.css";
+@import "./blocks/header/__menu-btn/header__menu-btn.css";
+@import "./blocks/header/__menu-btn/_type/header__menu-btn_type_open.css";
+@import "./blocks/header/__menu-btn/_type/header__menu-btn_type_close.css";
+
+@import "./blocks/page/page.css";
+@import "./blocks/page/__container/page__container.css";
+@import "./blocks/page/__loading-container/page__loading-container.css";
+@import "./blocks/page/__loading-animation/page__loading-animation.css";
+
+@import "./blocks/profile/profile.css";
+@import "./blocks/profile/__add-pic-btn/profile__add-pic-btn.css";
+@import "./blocks/profile/__container/profile__container.css";
+@import "./blocks/profile/__container-avatar/profile__container-avatar.css";
+@import "./blocks/profile/__container-info/profile__container-info.css";
+@import "./blocks/profile/__container-name/profile__container-name.css";
+@import "./blocks/profile/__edit-avatar-btn/profile__edit-avatar-btn.css";
+@import "./blocks/profile/__edit-btn/profile__edit-btn.css";
+@import "./blocks/profile/__avatar/profile__avatar.css";
+@import "./blocks/profile/__about/profile__about.css";
+@import "./blocks/profile/__name/profile__name.css";
+
+@import "./blocks/card/card.css";
+@import "./blocks/card/__delete-btn/card__delete-btn.css";
+@import "./blocks/card/__img/card__img.css";
+@import "./blocks/card/__info/card__info.css";
+@import "./blocks/card/__like-container/card__like-container.css";
+@import "./blocks/card/__like-counter/card__like-counter.css";
+@import "./blocks/card/__like-btn/card__like-btn.css";
+@import "./blocks/card/__like-btn/_active/card__like-btn_active.css";
+@import "./blocks/card/__name/card__name.css";
+
+@import "./blocks/cards/cards.css";
+
+@import "./blocks/footer/footer.css";
+@import "./blocks/footer/__copyright/footer__copyright.css";
+
+@import "./blocks/popup/popup.css";
+@import "./blocks/popup/__container/popup__container.css";
+@import "./blocks/popup/__save-btn/popup__save-btn.css";
+@import "./blocks/popup/__save-btn/_type/popup__save-btn_type_disabled.css";
+@import "./blocks/popup/__input/popup__input.css";
+@import "./blocks/popup/__input/_type/popup__input_type_error.css";
+@import "./blocks/popup/__input-container/popup__input-container.css";
+@import "./blocks/popup/__error/popup__error.css";
+@import "./blocks/popup/__error/_visible/popup__error_visible.css";
+@import "./blocks/popup/__header/popup__header.css";
+@import "./blocks/popup/__form/popup__form.css";
+@import "./blocks/popup/__close-btn/popup__close-btn.css";
+@import "./blocks/popup/__sign/_type/popup__sign_type_fail.css";
+@import "./blocks/popup/__sign/_type/popup__sign_type_success.css";
+@import "./blocks/popup/__subheader/popup__subheader.css";
+@import "./blocks/popup/_type/popup_type_photo.css";
+@import "./blocks/popup/_opened/popup_opened.css";
+
+@import "./blocks/content/content.css";
+
+@import "./blocks/photo-popup/photo-popup.css";
+@import "./blocks/photo-popup/__photo/photo-popup__photo.css";
+@import "./blocks/photo-popup/__header/photo-popup__header.css";
+
+@import "./blocks/sign/__container/sign__container.css";
+@import "./blocks/sign/__header/sign__header.css";
+@import "./blocks/sign/__form/sign__form.css";
+@import "./blocks/sign/__form-input/sign__form-input.css";
+@import "./blocks/sign/__button/sign__button.css";
+@import "./blocks/sign/__link/sign__link.css";
+@import "./blocks/sign/__link-container/sign__link-container.css";

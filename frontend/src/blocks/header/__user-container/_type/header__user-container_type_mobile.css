@@ -1,0 +1,11 @@
+.header__user-container_type_mobile {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 40px;
+  left: auto;
+  right: auto;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.1s, opacity 0.1s linear;
+}

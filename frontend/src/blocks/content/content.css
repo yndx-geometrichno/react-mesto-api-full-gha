@@ -1,0 +1,9 @@
+.content {
+  flex: 1;
+}
+
+@media screen and (max-width: 900px) {
+  .content {
+    padding: 0 19px;
+  }
+}
