@@ -49,15 +49,16 @@ function App() {
       .finally(() => {
         setContentLoading(false);
       });
-    if (localStorage.getItem("jwt")) {
-      let jwt = localStorage.getItem("jwt");
-      checkToken(jwt)
+    if (localStorage.getItem("userId")) {
+      let userId = localStorage.getItem("userId");
+      checkToken(userId)
         .then((res) => {
-          setUserEmail(res.data.email);
+          setUserEmail(res.email);
           setLoggedIn(true);
           navigate("/", { replace: true });
         })
         .catch((err) => {
+          localStorage.removeItem("userId")
           console.log(err);
         });
     }
@@ -164,7 +165,7 @@ function App() {
   function onLogin(password, email) {
     authorize(password, email)
       .then((res) => {
-        if (res.token) {
+        if (res.user._id) {
           navigate("/", { replace: true });
           setUserEmail(email);
           setLoggedIn(true);
@@ -197,7 +198,7 @@ function App() {
   }
 
   function onSignOut() {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("userId");
     setLoggedIn(false);
     setUserEmail("");
   }

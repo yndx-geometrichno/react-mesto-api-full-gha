@@ -9,7 +9,6 @@ const { errors } = require("celebrate");
 const router = require("./routes/index");
 const { requestLogger, errorLogger } = require("./middleware/logger");
 const errorHandler = require("./middleware/ErrorHandlingMiddleWare");
-
 // const { DB_PORT, DB_URL } = process.env;
 const DB_PORT = 3000;
 const DB_URL = "mongodb://127.0.0.1:27017/mestodb";
@@ -21,7 +20,19 @@ const limiter = rateLimit({
 
 const app = express();
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors(
+    {
+    origin: [
+      "https://bestfrontend.here.nomoredomainsmonster.ru",
+      "http://bestfrontend.here.nomoredomainsmonster.ru",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+    maxAge: 30,
+  }
+  )
+);
 app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());

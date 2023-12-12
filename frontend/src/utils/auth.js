@@ -1,9 +1,10 @@
 const contentType = {
+  "Accept": 'application/json',
   "Content-type": "application/json",
 };
 
 // export const BASE_URL = "bestfrontend.here.nomoredomainsmonster.ru";
-export const BASE_URL = "";
+export const BASE_URL = "https://api.bestfrontend.here.nomoredomainsmonster.ru";
 
 function getResponse(res) {
   if (res.ok) {
@@ -29,11 +30,12 @@ export const register = (password, email) => {
 export const authorize = (password, email) => {
   return request("/signin", {
     method: "POST",
+    credentials: "include",
     headers: contentType,
     body: JSON.stringify({ password, email }),
   }).then((data) => {
-    if (data.token) {
-      localStorage.setItem("jwt", data.token);
+    if (data.user._id) {
+      localStorage.setItem("userId", data.user._id);
       return data;
     }
   });
@@ -41,6 +43,7 @@ export const authorize = (password, email) => {
 
 export const checkToken = (token) => {
   return request("/users/me", {
-    headers: { contentType, Authorization: `Bearer ${token}` },
+    headers: { contentType },
+    credentials: "include",
   }).then((data) => data);
 };

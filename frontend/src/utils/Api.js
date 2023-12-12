@@ -1,14 +1,15 @@
 const apiConfig = {
-  url: "api.bestfrontend.here.nomoredomainsmonster.ru",
+  url: "https://api.bestfrontend.here.nomoredomainsmonster.ru",
   headers: {
     "Content-type": "application/json",
   },
+  credentials: "include",
 };
-
 class Api {
-  constructor({ url, headers }) {
+  constructor({ url, headers, credentials }) {
     this._url = url;
     this._headers = headers;
+    this._credentials = credentials;
   }
 
   _getResponse(res) {
@@ -23,17 +24,24 @@ class Api {
   }
 
   getInitialCards() {
-    return this._request(`/cards`, { headers: this._headers });
+    return this._request(`/cards`, {
+      headers: this._headers,
+      credentials: this._credentials,
+    });
   }
 
   getUserInfo() {
-    return this._request(`/users/me`, { headers: this._headers });
+    return this._request(`/users/me`, {
+      headers: this._headers,
+      credentials: "include",
+    });
   }
 
   updateUserInfo({ name, about }) {
     return this._request(`/users/me`, {
       method: "PATCH",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         name: name,
         about: about,
@@ -45,6 +53,7 @@ class Api {
     return this._request(`/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         avatar: avatar,
       }),
@@ -55,6 +64,7 @@ class Api {
     return this._request(`/cards`, {
       method: "POST",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         name: name,
         link: link,
@@ -66,6 +76,7 @@ class Api {
     return this._request(`/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
+      credentials: this._credentials,
     });
   }
 
@@ -74,11 +85,13 @@ class Api {
       return this._request(`/cards/${cardId}/likes`, {
         method: "PUT",
         headers: this._headers,
+        credentials: this._credentials,
       });
     } else {
       return this._request(`/cards/${cardId}/likes`, {
         method: "DELETE",
         headers: this._headers,
+        credentials: this._credentials,
       });
     }
   }
