@@ -14,15 +14,14 @@ const DB_PORT = 3000;
 const DB_URL = "mongodb://127.0.0.1:27017/mestodb";
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  limit: 10000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
   message: "Too many requests from this IP, please try again later.",
 });
 
 const app = express();
 app.use(helmet());
 app.use(
-  cors(
-    {
+  cors({
     origin: [
       "https://bestfrontend.here.nomoredomainsmonster.ru",
       "http://bestfrontend.here.nomoredomainsmonster.ru",
@@ -30,8 +29,8 @@ app.use(
     ],
     credentials: true,
     maxAge: 30,
-  }
-  )
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+  })
 );
 app.use(limiter);
 app.use(express.json());

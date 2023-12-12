@@ -1,3 +1,4 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
@@ -141,7 +142,7 @@ const login = async (req, res, next) => {
       .cookie("token", token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: true,
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
       })
       .send({ user });
     return user;

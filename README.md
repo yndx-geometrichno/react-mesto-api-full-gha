@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.129.131
+IP 158.160.129.131
 
 Frontend https://bestfrontend.here.nomoredomainsmonster.ru/
 
