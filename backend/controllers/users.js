@@ -4,8 +4,9 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const ApiError = require("../error/ApiError");
 
-const MONGO_DUPLICATE_ERROR_CODE = 11000;
-const SECRET_KEY = "very-secret-key";
+// const MONGO_DUPLICATE_ERROR_CODE = 11000;
+// const SECRET_KEY = "very-secret-key";
+const { SECRET_KEY, MONGO_DUPLICATE_ERROR_CODE } = process.env;
 
 const getUsers = async (req, res, next) => {
   try {
@@ -92,7 +93,7 @@ const updateUserInfo = async (req, res, next) => {
   try {
     const { name, about } = req.body;
     const updateUser = await User.findOneAndUpdate(
-      {_id: req.user._id},
+      { _id: req.user._id },
       { $set: { name, about } },
       { new: true, runValidators: true }
     ).orFail(new Error("ValidationError"));
@@ -142,7 +143,8 @@ const login = async (req, res, next) => {
       .cookie("token", token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        secure: true,
       })
       .send({ user });
     return user;

@@ -12,19 +12,18 @@ export default function Card({
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn = card.owner === currentUser._id;
-  const isLiked = card.likes.some((i) => i === currentUser._id);
+  const isLiked = card.likes && card.likes.some((i) => i === currentUser._id);
 
   const cardLikeButtonClassName = `card__like-btn ${
     isLiked && "card__like-btn_active"
   }`;
 
   function handleClick() {
-    console.log(card.owner._id, currentUser._id)
     onCardClick(card);
   }
 
   function handleLikeClick() {
-    onCardLike(card);
+    onCardLike(card, isLiked);
   }
 
   function handleDeleteCard() {
@@ -50,7 +49,7 @@ export default function Card({
             aria-label="Нравится"
             onClick={handleLikeClick}
           ></button>
-          <div className="card__like-counter">{card.likes.length}</div>
+          <div className="card__like-counter">{card.likes && card.likes.length}</div>
         </div>
       </div>
     </article>

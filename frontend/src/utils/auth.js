@@ -41,6 +41,14 @@ export const authorize = (password, email) => {
   });
 };
 
+export const logout = () => {
+  return request("/signout", {
+    method: "POST",
+    credentials: "include",
+    headers: contentType,
+  })
+}
+
 export const checkToken = (token) => {
   return request("/users/me", {
     headers: { contentType },

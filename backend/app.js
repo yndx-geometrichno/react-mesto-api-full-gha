@@ -9,9 +9,10 @@ const { errors } = require("celebrate");
 const router = require("./routes/index");
 const { requestLogger, errorLogger } = require("./middleware/logger");
 const errorHandler = require("./middleware/ErrorHandlingMiddleWare");
-// const { DB_PORT, DB_URL } = process.env;
-const DB_PORT = 3000;
-const DB_URL = "mongodb://127.0.0.1:27017/mestodb";
+
+const { DB_PORT, DB_URL } = process.env;
+// const DB_PORT = 3000;
+// const DB_URL = "mongodb://127.0.0.1:27017/mestodb";
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   limit: 10000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).

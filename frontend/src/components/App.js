@@ -14,7 +14,7 @@ import Register from "./Register";
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
 import { api } from "../utils/Api";
-import { register, authorize, checkToken } from "../utils/auth";
+import { register, authorize, checkToken, logout } from "../utils/auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { AppContext } from "../contexts/AppContext";
 
@@ -83,11 +83,12 @@ function App() {
     setSelectedCard({});
   }
 
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) =>  i === currentUser._id);
+  function handleCardLike(card, isLiked) {
+    // const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
+      .then((res) => {
+        const {card: newCard} = res;
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
         );
@@ -198,9 +199,14 @@ function App() {
   }
 
   function onSignOut() {
-    localStorage.removeItem("userId");
-    setLoggedIn(false);
-    setUserEmail("");
+    logout().then(() => {
+      localStorage.removeItem("userId");
+      setLoggedIn(false);
+      setUserEmail("");
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   return (

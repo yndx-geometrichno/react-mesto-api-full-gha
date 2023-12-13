@@ -15,6 +15,10 @@ router.get("/crash-test", () => {
   }, 0);
 });
 
+router.post('/signout', (req, res) => {
+  res.clearCookie('token');
+  res.status(200).json({ message: 'Logout successful' });
+});
 router.post(
   "/signup",
   celebrate({
