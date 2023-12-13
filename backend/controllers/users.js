@@ -1,4 +1,3 @@
-require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
@@ -6,6 +5,7 @@ const ApiError = require("../error/ApiError");
 
 // const MONGO_DUPLICATE_ERROR_CODE = 11000;
 // const SECRET_KEY = "very-secret-key";
+
 const { SECRET_KEY, MONGO_DUPLICATE_ERROR_CODE } = process.env;
 
 const getUsers = async (req, res, next) => {
