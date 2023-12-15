@@ -52,7 +52,7 @@ router.get("/signout", (req, res) => {
 router.use("/users", auth, userRouter);
 router.use("/cards", auth, cardRouter);
 router.use("*", auth, (req, res, next) =>
-  next(ApiError.badRequest("This page is not exist"))
+  next(ApiError.notFound("This page is not exist"))
 );
 
 module.exports = router;

@@ -20,14 +20,9 @@ const getUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById(userId).orFail(new Error("NotFound"));
+    const user = await User.findById(userId).orFail(ApiError.notFound("Пользователь по указанному _id не найден"));
     return res.send(user);
   } catch (err) {
-    if (err.message === "NotFound") {
-      return next(
-        ApiError.badRequest("Пользователь по указанному _id не найден")
-      );
-    }
     if (err.name === "CastError") {
       return next(ApiError.invalid("Id is not valid"));
     }
@@ -38,14 +33,9 @@ const getUser = async (req, res, next) => {
 const getMe = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    const user = await User.findById(_id).orFail(new Error("NotFound"));
+    const user = await User.findById(_id).orFail(ApiError.notFound("Пользователь по указанному _id не найден"));
     return res.send(user);
   } catch (err) {
-    if (err.message === "NotFound") {
-      return next(
-        ApiError.badRequest("Пользователь по указанному _id не найден")
-      );
-    }
     return next(err);
   }
 };
@@ -133,7 +123,7 @@ const login = async (req, res, next) => {
 
     const user = await User.findUserByCredentials(email, password);
 
-    if (user.message === "WrongUserData") {
+    if (user.status === 401) {
       return next(ApiError.unauthorized(`Неправильные почта или пароль`));
     }
     const token = jwt.sign({ _id: user._id }, SECRET_KEY, {
@@ -149,7 +139,7 @@ const login = async (req, res, next) => {
       .send({ user });
     return user;
   } catch (err) {
-    if (err.message === "WrongUserData") {
+    if (err.status === 401) {
       return next(ApiError.unauthorized(`Неправильные почта или пароль`));
     }
     return next(err);

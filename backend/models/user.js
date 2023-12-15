@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const { Schema, model } = require("mongoose");
 const validator = require("validator");
+const ApiError = require('../error/ApiError')
 
 const userSchema = new Schema(
   {
@@ -51,20 +52,16 @@ const userSchema = new Schema(
 
 //  eslint-disable-next-line func-names
 userSchema.statics.findUserByCredentials = async function (email, password) {
-  try {
-    const user = await this.findOne({ email }).select("+password");
-    if (!user) {
-      throw new Error("WrongUserData");
-    }
-    return bcrypt.compare(password, user.password).then((matched) => {
-      if (!matched) {
-        throw new Error("WrongUserData");
-      }
-      return this.findOne({ email });
-    });
-  } catch (err) {
-    return new Error("WrongUserData");
+  const user = await this.findOne({ email }).select("+password");
+  if (!user) {
+    return ApiError.unauthorized(`Неправильные почта или пароль`);
   }
+  return bcrypt.compare(password, user.password).then((matched) => {
+    if (!matched) {
+      return ApiError.unauthorized(`Неправильные почта или пароль`);
+    }
+    return user;
+  });
 };
 
 module.exports = model("user", userSchema);

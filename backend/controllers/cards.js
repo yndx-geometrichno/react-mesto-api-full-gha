@@ -17,7 +17,7 @@ const getCard = async (req, res, next) => {
     return res.send(card);
   } catch (err) {
     if (err.message === "NotFound") {
-      return next(ApiError.badRequest("Карточка с указанным _id не найдена."));
+      return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
     if (err.name === "CastError") {
       return next(ApiError.invalid("Id is not valid"));
@@ -45,7 +45,7 @@ const deleteCard = async (req, res, next) => {
   try {
     const { cardId } = req.params;
     const card = await Card.findOne({ _id: cardId }).orFail(new Error("NotFound"));
-    const cardOwnerId = card.owner._id.toString().split("''");
+    const cardOwnerId = card.owner._id.toString();
     const userId = req.user._id._id;
     if (!cardOwnerId.includes(userId)) {
       return next(
@@ -56,7 +56,7 @@ const deleteCard = async (req, res, next) => {
     return res.status(200).send({ message: "Данная карточка удалена успешно" });
   } catch (err) {
     if (err.message === "NotFound") {
-      return next(ApiError.badRequest("Карточка с указанным _id не найдена."));
+      return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
     if (err.name === "CastError") {
       return next(ApiError.invalid("Id is not valid"));
@@ -76,7 +76,7 @@ const likeCard = async (req, res, next) => {
     return res.status(200).send({ card: updatedCard, message: "Лайк поставлен" });
   } catch (err) {
     if (err.message === "NotFound") {
-      return next(ApiError.badRequest("Карточка с указанным _id не найдена."));
+      return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
     if (err.name === "CastError") {
       return next(ApiError.invalid("Id is not valid"));
@@ -96,7 +96,7 @@ const dislikeCard = async (req, res, next) => {
     return res.status(200).send({ card: updatedCard, message: "Лайк удален" });
   } catch (err) {
     if (err.message === "NotFound") {
-      return next(ApiError.badRequest("Карточка с указанным _id не найдена."));
+      return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
     if (err.name === "CastError") {
       return next(ApiError.invalid("Id is not valid"));
