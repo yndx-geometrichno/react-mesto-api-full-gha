@@ -1,12 +1,13 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 const User = require("../models/user");
 const ApiError = require("../error/ApiError");
 
-// const MONGO_DUPLICATE_ERROR_CODE = 11000;
+const MONGO_DUPLICATE_ERROR_CODE = 11000;
 // const SECRET_KEY = "very-secret-key";
 
-const { SECRET_KEY, MONGO_DUPLICATE_ERROR_CODE } = process.env;
+const { SECRET_KEY } = process.env;
 
 const getUsers = async (req, res, next) => {
   try {
@@ -23,7 +24,7 @@ const getUser = async (req, res, next) => {
     const user = await User.findById(userId).orFail(ApiError.notFound("Пользователь по указанному _id не найден"));
     return res.send(user);
   } catch (err) {
-    if (err.name === "CastError") {
+    if (err instanceof mongoose.Error.CastError) {
       return next(ApiError.invalid("Id is not valid"));
     }
     return next(err);
@@ -62,7 +63,7 @@ const createUser = async (req, res, next) => {
 
     return res.status(201).send({ newUser: userWithoutPassword });
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err instanceof mongoose.Error.ValidationError) {
       return next(
         ApiError.invalid(
           "Переданы некорректные данные при создании пользователя"
@@ -89,7 +90,7 @@ const updateUserInfo = async (req, res, next) => {
     ).orFail(new Error("ValidationError"));
     return res.send(updateUser);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err instanceof mongoose.Error.ValidationError) {
       return next(
         ApiError.invalid("Переданы некорректные данные при обновлении профиля")
       );
@@ -108,7 +109,7 @@ const updateUserAvatar = async (req, res, next) => {
     );
     return res.send(userUpdateAvatar);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err instanceof mongoose.Error.ValidationError) {
       return next(
         ApiError.invalid("Переданы некорректные данные при обновлении аватара.")
       );

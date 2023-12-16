@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Card = require("../models/card");
 const ApiError = require("../error/ApiError");
 
@@ -19,7 +20,7 @@ const getCard = async (req, res, next) => {
     if (err.message === "NotFound") {
       return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
-    if (err.name === "CastError") {
+    if (err instanceof mongoose.Error.CastError) {
       return next(ApiError.invalid("Id is not valid"));
     }
     return next(err);
@@ -32,7 +33,7 @@ const createCard = async (req, res, next) => {
     const newCard = await Card.create({ name, link, owner: req.user._id._id });
     return res.status(201).send(await newCard.save());
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err instanceof mongoose.Error.ValidationError) {
       return next(
         ApiError.invalid("Переданы некорректные данные при создании карточки")
       );
@@ -58,7 +59,7 @@ const deleteCard = async (req, res, next) => {
     if (err.message === "NotFound") {
       return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
-    if (err.name === "CastError") {
+    if (err instanceof mongoose.Error.CastError) {
       return next(ApiError.invalid("Id is not valid"));
     }
     return next(err);
@@ -78,7 +79,7 @@ const likeCard = async (req, res, next) => {
     if (err.message === "NotFound") {
       return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
-    if (err.name === "CastError") {
+    if (err instanceof mongoose.Error.CastError) {
       return next(ApiError.invalid("Id is not valid"));
     }
     return next(err);
@@ -98,7 +99,7 @@ const dislikeCard = async (req, res, next) => {
     if (err.message === "NotFound") {
       return next(ApiError.notFound("Карточка с указанным _id не найдена."));
     }
-    if (err.name === "CastError") {
+    if (err instanceof mongoose.Error.CastError) {
       return next(ApiError.invalid("Id is not valid"));
     }
     return next(err);
