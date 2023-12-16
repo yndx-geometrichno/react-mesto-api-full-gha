@@ -185,7 +185,7 @@ function App() {
   function onRegister(password, email) {
     register(password, email)
       .then((res) => {
-        if (!res._id) {
+        if (!res.newUser) {
           throw new Error("");
         }
         navigate("/signin", { replace: true });
