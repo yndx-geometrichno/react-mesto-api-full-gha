@@ -21,7 +21,9 @@ const getUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById(userId).orFail(ApiError.notFound("Пользователь по указанному _id не найден"));
+    const user = await User.findById(userId).orFail(
+      ApiError.notFound("Пользователь по указанному _id не найден")
+    );
     return res.send(user);
   } catch (err) {
     if (err instanceof mongoose.Error.CastError) {
@@ -34,7 +36,9 @@ const getUser = async (req, res, next) => {
 const getMe = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    const user = await User.findById(_id).orFail(ApiError.notFound("Пользователь по указанному _id не найден"));
+    const user = await User.findById(_id).orFail(
+      ApiError.notFound("Пользователь по указанному _id не найден")
+    );
     return res.send(user);
   } catch (err) {
     return next(err);
@@ -87,14 +91,11 @@ const updateUserInfo = async (req, res, next) => {
       { _id: req.user._id },
       { $set: { name, about } },
       { new: true, runValidators: true }
-    ).orFail(new Error("ValidationError"));
+    ).orFail(
+      ApiError.invalid("Переданы некорректные данные при обновлении профиля")
+    );
     return res.send(updateUser);
   } catch (err) {
-    if (err instanceof mongoose.Error.ValidationError) {
-      return next(
-        ApiError.invalid("Переданы некорректные данные при обновлении профиля")
-      );
-    }
     return next(err);
   }
 };
@@ -125,7 +126,7 @@ const login = async (req, res, next) => {
     const user = await User.findUserByCredentials(email, password);
 
     if (user.status === 401) {
-      return next(ApiError.unauthorized(`Неправильные почта или пароль`));
+      throw ApiError.unauthorized(`Неправильные почта или пароль`);
     }
     const token = jwt.sign({ _id: user._id }, SECRET_KEY, {
       expiresIn: "7d",
@@ -140,9 +141,6 @@ const login = async (req, res, next) => {
       .send({ user });
     return user;
   } catch (err) {
-    if (err.status === 401) {
-      return next(ApiError.unauthorized(`Неправильные почта или пароль`));
-    }
     return next(err);
   }
 };
