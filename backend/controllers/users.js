@@ -91,11 +91,14 @@ const updateUserInfo = async (req, res, next) => {
       { _id: req.user._id },
       { $set: { name, about } },
       { new: true, runValidators: true }
-    ).orFail(
-      ApiError.invalid("Переданы некорректные данные при обновлении профиля")
-    );
+    ).orFail(ApiError.notFound("Пользователь по указанному _id не найден"));
     return res.send(updateUser);
   } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      return next(
+        ApiError.invalid("Переданы некорректные данные при обновлении аватара.")
+      );
+    }
     return next(err);
   }
 };
